@@ -4,11 +4,32 @@ from __future__ import annotations
 
 import heapq
 import itertools
-from typing import Callable, Iterable, Iterator, List, Optional, Sequence, Tuple
+from typing import Callable, Iterable, Iterator, List, Optional, Set, Tuple
 
 from .strips_model import Action, State
 
 Neighbor = Tuple[State, int, Action]
+
+
+def build_missing_skills_heuristic(goal_skills: Iterable[str]) -> Callable[[State], int]:
+    """Construye una heuristica admisible que cuenta habilidades objetivo faltantes.
+
+    Si el objetivo es un conjunto de habilidades, esta estimacion nunca supera
+    el coste real minimo cuando cada curso tiene coste unitario.
+    """
+
+    goal_set: Set[str] = set(goal_skills)
+
+    def heuristic(state: State) -> int:
+        return len(goal_set.difference(state.skills))
+
+    return heuristic
+
+
+def goal_skill_heuristic(goal_skill: str) -> Callable[[State], int]:
+    """Heuristica conveniencia para una unica habilidad meta."""
+
+    return build_missing_skills_heuristic([goal_skill])
 
 
 def successor_states(state: State, actions: Iterable[Action]) -> Iterator[Neighbor]:
@@ -58,10 +79,12 @@ def astar(
 def find_path(initial_state: State, goal_skill: str, actions: Iterable[Action]) -> List[str]:
     """Busca una secuencia de cursos que consiga la habilidad objetivo."""
 
+    heuristic_fn = goal_skill_heuristic(goal_skill)
     route = astar(
         start=initial_state,
         goal_test=lambda state: goal_skill in state.skills,
         neighbors_fn=lambda state: successor_states(state, actions),
+        heuristic_fn=heuristic_fn,
     )
     return [action.name for _, action in route if action is not None]
 
