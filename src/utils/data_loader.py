@@ -1,28 +1,4 @@
-"""
-Funciones utilitarias para cargar JSON de datos (`data/`).
-Incluye comentarios que explican su propósito.
-"""
-
-import json
-from pathlib import Path
-
-
-def load_json_relative(path):
-    base = Path(__file__).resolve().parents[2]
-    p = base / 'data' / path
-    with open(p, 'r', encoding='utf-8') as f:
-        return json.load(f)
-
-
-def load_skills():
-    """Carga `skills_library.json` y devuelve su contenido como dict."""
-    return load_json_relative('skills_library.json')
-
-
-def load_courses():
-    """Carga `courses_db.json` y devuelve su contenido como dict."""
-    return load_json_relative('courses_db.json')
-"""Carga los catalogos de habilidades y cursos desde disco."""
+"""Funciones utilitarias para cargar catalogos desde `data/`."""
 
 from __future__ import annotations
 
@@ -31,7 +7,24 @@ from pathlib import Path
 from typing import Any
 
 
-def load_json(path: str | Path) -> Any:
-    """Lee un archivo JSON del proyecto."""
-    with Path(path).open("r", encoding="utf-8") as handle:
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DATA_DIR = PROJECT_ROOT / "data"
+
+
+def load_json_relative(path: str) -> Any:
+    """Lee un archivo JSON dentro de la carpeta `data`."""
+
+    with (DATA_DIR / path).open("r", encoding="utf-8") as handle:
         return json.load(handle)
+
+
+def load_skills() -> dict[str, Any]:
+    """Carga `skills_library.json`."""
+
+    return load_json_relative("skills_library.json")
+
+
+def load_courses() -> dict[str, Any]:
+    """Carga `courses_db.json`."""
+
+    return load_json_relative("courses_db.json")
