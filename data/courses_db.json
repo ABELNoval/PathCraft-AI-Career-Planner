@@ -1,0 +1,26 @@
+{
+    "description": "Base de cursos. Cada curso incluye precondiciones (habilidades necesarias) y efectos (habilidades adquiridas).",
+    "courses": [
+        {
+            "id": "course_python_101",
+            "title": "Python 101",
+            "description": "Curso introductorio de Python.",
+            "prerequisites": [],
+            "outcomes": [
+                "python_basics"
+            ]
+        },
+        {
+            "id": "course_ml_intro",
+            "title": "Introducción a Machine Learning",
+            "description": "Curso introductorio de ML que requiere conocimientos básicos de programación.",
+            "prerequisites": [
+                "python_basics"
+            ],
+            "outcomes": [
+                "ml_intro"
+            ]
+        }
+    ],
+    "_comment": "Base inicial de cursos con precondiciones y efectos."
+}

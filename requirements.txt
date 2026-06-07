@@ -1,0 +1,1 @@
+# Dependencias base del proyecto PathCraft
