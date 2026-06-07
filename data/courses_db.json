@@ -1,26 +1,118 @@
 {
-    "description": "Base de cursos. Cada curso incluye precondiciones (habilidades necesarias) y efectos (habilidades adquiridas).",
+    "description": "Catálogo de 10 cursos de prueba conectados con las 12 habilidades del sistema.",
     "courses": [
         {
-            "id": "course_python_101",
-            "title": "Python 101",
-            "description": "Curso introductorio de Python.",
+            "id": "course_01",
+            "title": "Curso 1",
+            "description": "Introduce la habilidad inicial.",
             "prerequisites": [],
             "outcomes": [
-                "python_basics"
+                "skill_01"
             ]
         },
         {
-            "id": "course_ml_intro",
-            "title": "Introducción a Machine Learning",
-            "description": "Curso introductorio de ML que requiere conocimientos básicos de programación.",
+            "id": "course_02",
+            "title": "Curso 2",
+            "description": "Avanza desde la primera habilidad.",
             "prerequisites": [
-                "python_basics"
+                "skill_01"
             ],
             "outcomes": [
-                "ml_intro"
+                "skill_02"
+            ]
+        },
+        {
+            "id": "course_03",
+            "title": "Curso 3",
+            "description": "Desbloquea la tercera habilidad.",
+            "prerequisites": [
+                "skill_02"
+            ],
+            "outcomes": [
+                "skill_03"
+            ]
+        },
+        {
+            "id": "course_04",
+            "title": "Curso 4",
+            "description": "Trabaja la rama lateral del mapa.",
+            "prerequisites": [
+                "skill_02"
+            ],
+            "outcomes": [
+                "skill_04"
+            ]
+        },
+        {
+            "id": "course_05",
+            "title": "Curso 5",
+            "description": "Construye la siguiente capa de progreso.",
+            "prerequisites": [
+                "skill_03"
+            ],
+            "outcomes": [
+                "skill_05"
+            ]
+        },
+        {
+            "id": "course_06",
+            "title": "Curso 6",
+            "description": "Combina las ramas previas para avanzar.",
+            "prerequisites": [
+                "skill_04",
+                "skill_05"
+            ],
+            "outcomes": [
+                "skill_06"
+            ]
+        },
+        {
+            "id": "course_07",
+            "title": "Curso 7",
+            "description": "Extiende la ruta principal y lateral.",
+            "prerequisites": [
+                "skill_05"
+            ],
+            "outcomes": [
+                "skill_07"
+            ]
+        },
+        {
+            "id": "course_08",
+            "title": "Curso 8",
+            "description": "Exige consolidar habilidades intermedias.",
+            "prerequisites": [
+                "skill_06",
+                "skill_07"
+            ],
+            "outcomes": [
+                "skill_08"
+            ]
+        },
+        {
+            "id": "course_09",
+            "title": "Curso 9",
+            "description": "Da acceso a la penúltima habilidad.",
+            "prerequisites": [
+                "skill_08"
+            ],
+            "outcomes": [
+                "skill_09",
+                "skill_10"
+            ]
+        },
+        {
+            "id": "course_10",
+            "title": "Curso 10",
+            "description": "Cierra el ciclo y entrega la habilidad final.",
+            "prerequisites": [
+                "skill_09",
+                "skill_10"
+            ],
+            "outcomes": [
+                "skill_11",
+                "skill_12"
             ]
         }
-    ],
-    "_comment": "Base inicial de cursos con precondiciones y efectos."
+    ]
 }

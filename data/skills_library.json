@@ -1,5 +1,93 @@
 {
-  "_comment": "Catalogo base de habilidades y relaciones entre prerrequisitos.",
-  "skills": [],
-  "relationships": []
+  "description": "Catálogo de 12 habilidades conectadas entre sí para probar el flujo del planificador.",
+  "skills": [
+    {
+      "id": "skill_01",
+      "name": "Habilidad 1",
+      "description": "Base inicial de la cadena de aprendizaje.",
+      "prerequisites": []
+    },
+    {
+      "id": "skill_02",
+      "name": "Habilidad 2",
+      "description": "Depende de la habilidad inicial.",
+      "prerequisites": ["skill_01"]
+    },
+    {
+      "id": "skill_03",
+      "name": "Habilidad 3",
+      "description": "Sigue la progresión lineal de aprendizaje.",
+      "prerequisites": ["skill_02"]
+    },
+    {
+      "id": "skill_04",
+      "name": "Habilidad 4",
+      "description": "Primer punto de ramificación funcional.",
+      "prerequisites": ["skill_02"]
+    },
+    {
+      "id": "skill_05",
+      "name": "Habilidad 5",
+      "description": "Avanza desde la tercera habilidad.",
+      "prerequisites": ["skill_03"]
+    },
+    {
+      "id": "skill_06",
+      "name": "Habilidad 6",
+      "description": "Conecta la rama lateral con la principal.",
+      "prerequisites": ["skill_04", "skill_05"]
+    },
+    {
+      "id": "skill_07",
+      "name": "Habilidad 7",
+      "description": "Amplía la rama principal con una nueva dependencia.",
+      "prerequisites": ["skill_05"]
+    },
+    {
+      "id": "skill_08",
+      "name": "Habilidad 8",
+      "description": "Requiere consolidar varias habilidades previas.",
+      "prerequisites": ["skill_06", "skill_07"]
+    },
+    {
+      "id": "skill_09",
+      "name": "Habilidad 9",
+      "description": "Siguiente nivel de complejidad del grafo.",
+      "prerequisites": ["skill_08"]
+    },
+    {
+      "id": "skill_10",
+      "name": "Habilidad 10",
+      "description": "Requiere integración de la rama lateral.",
+      "prerequisites": ["skill_07"]
+    },
+    {
+      "id": "skill_11",
+      "name": "Habilidad 11",
+      "description": "Conecta la habilidad 9 con un último salto.",
+      "prerequisites": ["skill_09", "skill_10"]
+    },
+    {
+      "id": "skill_12",
+      "name": "Habilidad 12",
+      "description": "Habilidad final del catálogo de prueba.",
+      "prerequisites": ["skill_11"]
+    }
+  ],
+  "relationships": [
+    {"from": "skill_01", "to": "skill_02"},
+    {"from": "skill_02", "to": "skill_03"},
+    {"from": "skill_02", "to": "skill_04"},
+    {"from": "skill_03", "to": "skill_05"},
+    {"from": "skill_04", "to": "skill_06"},
+    {"from": "skill_05", "to": "skill_06"},
+    {"from": "skill_05", "to": "skill_07"},
+    {"from": "skill_06", "to": "skill_08"},
+    {"from": "skill_07", "to": "skill_08"},
+    {"from": "skill_08", "to": "skill_09"},
+    {"from": "skill_07", "to": "skill_10"},
+    {"from": "skill_09", "to": "skill_11"},
+    {"from": "skill_10", "to": "skill_11"},
+    {"from": "skill_11", "to": "skill_12"}
+  ]
 }
