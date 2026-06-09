@@ -5,6 +5,7 @@
             "id": "course_01",
             "title": "Curso 1",
             "description": "Introduce la habilidad inicial.",
+            "cost": 1,
             "prerequisites": [],
             "outcomes": [
                 "skill_01"
@@ -14,6 +15,7 @@
             "id": "course_02",
             "title": "Curso 2",
             "description": "Avanza desde la primera habilidad.",
+            "cost": 2,
             "prerequisites": [
                 "skill_01"
             ],
@@ -25,6 +27,7 @@
             "id": "course_03",
             "title": "Curso 3",
             "description": "Desbloquea la tercera habilidad.",
+            "cost": 2,
             "prerequisites": [
                 "skill_02"
             ],
@@ -36,6 +39,7 @@
             "id": "course_04",
             "title": "Curso 4",
             "description": "Trabaja la rama lateral del mapa.",
+            "cost": 1,
             "prerequisites": [
                 "skill_02"
             ],
@@ -47,6 +51,7 @@
             "id": "course_05",
             "title": "Curso 5",
             "description": "Construye la siguiente capa de progreso.",
+            "cost": 3,
             "prerequisites": [
                 "skill_03"
             ],
@@ -58,6 +63,7 @@
             "id": "course_06",
             "title": "Curso 6",
             "description": "Combina las ramas previas para avanzar.",
+            "cost": 4,
             "prerequisites": [
                 "skill_04",
                 "skill_05"
@@ -70,6 +76,7 @@
             "id": "course_07",
             "title": "Curso 7",
             "description": "Extiende la ruta principal y lateral.",
+            "cost": 2,
             "prerequisites": [
                 "skill_05"
             ],
@@ -81,6 +88,7 @@
             "id": "course_08",
             "title": "Curso 8",
             "description": "Exige consolidar habilidades intermedias.",
+            "cost": 3,
             "prerequisites": [
                 "skill_06",
                 "skill_07"
@@ -93,6 +101,7 @@
             "id": "course_09",
             "title": "Curso 9",
             "description": "Da acceso a la penúltima habilidad.",
+            "cost": 2,
             "prerequisites": [
                 "skill_08"
             ],
@@ -105,6 +114,7 @@
             "id": "course_10",
             "title": "Curso 10",
             "description": "Cierra el ciclo y entrega la habilidad final.",
+            "cost": 5,
             "prerequisites": [
                 "skill_09",
                 "skill_10"

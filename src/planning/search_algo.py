@@ -8,10 +8,10 @@ from typing import Callable, Iterable, Iterator, List, Optional, Set, Tuple
 
 from .strips_model import Action, State
 
-Neighbor = Tuple[State, int, Action]
+Neighbor = Tuple[State, float, Action]
 
 
-def build_missing_skills_heuristic(goal_skills: Iterable[str]) -> Callable[[State], int]:
+def build_missing_skills_heuristic(goal_skills: Iterable[str]) -> Callable[[State], float]:
     """Construye una heuristica admisible que cuenta habilidades objetivo faltantes.
 
     Si el objetivo es un conjunto de habilidades, esta estimacion nunca supera
@@ -20,13 +20,13 @@ def build_missing_skills_heuristic(goal_skills: Iterable[str]) -> Callable[[Stat
 
     goal_set: Set[str] = set(goal_skills)
 
-    def heuristic(state: State) -> int:
-        return len(goal_set.difference(state.skills))
+    def heuristic(state: State) -> float:
+        return float(len(goal_set.difference(state.skills)))
 
     return heuristic
 
 
-def goal_skill_heuristic(goal_skill: str) -> Callable[[State], int]:
+def goal_skill_heuristic(goal_skill: str) -> Callable[[State], float]:
     """Heuristica conveniencia para una unica habilidad meta."""
 
     return build_missing_skills_heuristic([goal_skill])
@@ -36,26 +36,26 @@ def successor_states(state: State, actions: Iterable[Action]) -> Iterator[Neighb
     """Genera el espacio sucesor aplicando todas las acciones validas.
 
     Cada sucesor representa el estado alcanzado tras completar un curso.
-    El coste de cada transicion es 1 porque, por ahora, todos los cursos valen lo mismo.
+    El coste de la transicion se toma del coste propio de cada accion/curso.
     """
 
     for action in actions:
         if action.is_applicable(state):
-            yield state.apply(action), 1, action
+            yield state.apply(action), action.cost, action
 
 
 def astar(
     start: State,
     goal_test: Callable[[State], bool],
     neighbors_fn: Callable[[State], Iterable[Neighbor]],
-    heuristic_fn: Callable[[State], int] = lambda state: 0,
+    heuristic_fn: Callable[[State], float] = lambda state: 0.0,
 ) -> List[Tuple[State, Optional[Action]]]:
     """Ejecuta A* y devuelve la ruta como lista de estados y acciones."""
 
     counter = itertools.count()
-    open_heap = [(heuristic_fn(start), 0, next(counter), start)]
+    open_heap = [(heuristic_fn(start), 0.0, next(counter), start)]
     came_from: dict[State, Tuple[Optional[State], Optional[Action]]] = {start: (None, None)}
-    g_score = {start: 0}
+    g_score: dict[State, float] = {start: 0.0}
 
     while open_heap:
         _, current_g, _, current = heapq.heappop(open_heap)
@@ -66,11 +66,11 @@ def astar(
             continue
 
         for neighbor, step_cost, action in neighbors_fn(current):
-            tentative_g = current_g + step_cost
+            tentative_g = float(current_g) + float(step_cost)
             if tentative_g < g_score.get(neighbor, float("inf")):
-                g_score[neighbor] = tentative_g
+                g_score[neighbor] = float(tentative_g)
                 came_from[neighbor] = (current, action)
-                f_score = tentative_g + heuristic_fn(neighbor)
+                f_score = tentative_g + float(heuristic_fn(neighbor))
                 heapq.heappush(open_heap, (f_score, tentative_g, next(counter), neighbor))
 
     return []

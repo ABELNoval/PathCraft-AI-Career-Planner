@@ -18,7 +18,9 @@ def _build_skill_index(skills_catalog: Iterable[dict[str, Any]]) -> dict[str, st
     return index
 
 
-def parse_goal(text: str, skills_catalog: Iterable[dict[str, Any]] | None = None) -> dict[str, Any]:
+def parse_goal(
+    text: str, skills_catalog: Iterable[dict[str, Any]] | None = None
+) -> dict[str, Any]:
     """Convierte una meta libre en una meta formal simple.
 
     Este parser es un paso base del rol del LLM: normaliza el texto y trata
