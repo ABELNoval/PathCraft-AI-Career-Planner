@@ -46,11 +46,12 @@ def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
 
-    skills_catalog = load_skills().get("skills", [])
+    skills_data = load_skills()
+    skills_catalog = skills_data.get("skills", [])
     courses_catalog = load_courses().get("courses", [])
 
-    parsed_goal = parse_goal(args.target, skills_catalog)
-    goal_validation = validate_goal_translation(parsed_goal)
+    parsed_goal = parse_goal(args.target, skills_data)
+    goal_validation = validate_goal_translation(parsed_goal, skills_catalog)
 
     current_skills = _normalize_current_skills(_parse_skill_list(args.current_skills), skills_catalog)
     initial_state = State.from_iterable(current_skills)
@@ -61,10 +62,17 @@ def main() -> int:
     print(f"Meta formal: {parsed_goal['goal_skill_id']}")
     print(f"Validacion del traductor: {goal_validation}")
 
-    if parsed_goal["goal_skill_id"]:
+    if goal_validation["valid"]:
         path = find_path(initial_state, parsed_goal["goal_skill_id"], actions)
         print(f"Ruta sugerida: {path}")
-        print(f"Ruta valida: {validate_path(path)}")
+        path_validation = validate_path(
+            path,
+            initial_state=initial_state,
+            goal_skill=parsed_goal["goal_skill_id"],
+            actions=actions,
+            skills_catalog=skills_catalog,
+        )
+        print(f"Validacion de ruta: {path_validation}")
     else:
         print("No se pudo inferir una meta formal.")
 
