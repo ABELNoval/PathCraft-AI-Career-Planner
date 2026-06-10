@@ -1,93 +1,121 @@
 {
-  "description": "Catálogo de 12 habilidades conectadas entre sí para probar el flujo del planificador.",
+  "description": "Catalogo semirrealista de habilidades para una ruta hacia Data Scientist Junior.",
+  "target_roles": [
+    {
+      "id": "role_data_scientist_junior",
+      "name": "Data Scientist Junior",
+      "goal_skill_id": "skill_12",
+      "aliases": [
+        "data scientist",
+        "cientifico de datos",
+        "cientifica de datos",
+        "analista de datos avanzado"
+      ]
+    }
+  ],
   "skills": [
     {
       "id": "skill_01",
-      "name": "Habilidad 1",
-      "description": "Base inicial de la cadena de aprendizaje.",
+      "name": "Python fundamentals",
+      "description": "Variables, control flow, functions, modules, virtual environments, and basic scripting.",
+      "aliases": ["python", "programacion en python", "fundamentos de python"],
       "prerequisites": []
     },
     {
       "id": "skill_02",
-      "name": "Habilidad 2",
-      "description": "Depende de la habilidad inicial.",
+      "name": "Data analysis with pandas",
+      "description": "Tabular data cleaning, joins, aggregation, missing values, and exploratory workflows.",
+      "aliases": ["pandas", "analisis de datos", "limpieza de datos"],
       "prerequisites": ["skill_01"]
     },
     {
       "id": "skill_03",
-      "name": "Habilidad 3",
-      "description": "Sigue la progresión lineal de aprendizaje.",
-      "prerequisites": ["skill_02"]
+      "name": "SQL querying",
+      "description": "SELECT queries, joins, filters, grouping, and database-backed analysis.",
+      "aliases": ["sql", "consultas sql", "bases de datos"],
+      "prerequisites": []
     },
     {
       "id": "skill_04",
-      "name": "Habilidad 4",
-      "description": "Primer punto de ramificación funcional.",
+      "name": "Statistics for data science",
+      "description": "Distributions, sampling, confidence intervals, hypothesis testing, and correlation.",
+      "aliases": ["estadistica", "probabilidad", "statistics"],
       "prerequisites": ["skill_02"]
     },
     {
       "id": "skill_05",
-      "name": "Habilidad 5",
-      "description": "Avanza desde la tercera habilidad.",
-      "prerequisites": ["skill_03"]
+      "name": "Data visualization",
+      "description": "Charts, dashboards, visual encodings, and communication of analytical findings.",
+      "aliases": ["visualizacion", "graficos", "dashboards"],
+      "prerequisites": ["skill_02"]
     },
     {
       "id": "skill_06",
-      "name": "Habilidad 6",
-      "description": "Conecta la rama lateral con la principal.",
-      "prerequisites": ["skill_04", "skill_05"]
+      "name": "Feature engineering",
+      "description": "Encoding, scaling, feature extraction, leakage control, and train/test preparation.",
+      "aliases": ["feature engineering", "ingenieria de variables"],
+      "prerequisites": ["skill_02", "skill_04"]
     },
     {
       "id": "skill_07",
-      "name": "Habilidad 7",
-      "description": "Amplía la rama principal con una nueva dependencia.",
-      "prerequisites": ["skill_05"]
+      "name": "Supervised machine learning",
+      "description": "Regression, classification, model fitting, metrics, and cross-validation.",
+      "aliases": ["machine learning", "aprendizaje supervisado", "ml supervisado"],
+      "prerequisites": ["skill_04", "skill_06"]
     },
     {
       "id": "skill_08",
-      "name": "Habilidad 8",
-      "description": "Requiere consolidar varias habilidades previas.",
-      "prerequisites": ["skill_06", "skill_07"]
+      "name": "Unsupervised learning",
+      "description": "Clustering, dimensionality reduction, anomaly exploration, and segment discovery.",
+      "aliases": ["clustering", "aprendizaje no supervisado"],
+      "prerequisites": ["skill_04", "skill_06"]
     },
     {
       "id": "skill_09",
-      "name": "Habilidad 9",
-      "description": "Siguiente nivel de complejidad del grafo.",
-      "prerequisites": ["skill_08"]
+      "name": "Model evaluation and selection",
+      "description": "Metric choice, validation strategy, bias/variance tradeoffs, and baseline comparison.",
+      "aliases": ["evaluacion de modelos", "seleccion de modelos", "metricas"],
+      "prerequisites": ["skill_07"]
     },
     {
       "id": "skill_10",
-      "name": "Habilidad 10",
-      "description": "Requiere integración de la rama lateral.",
+      "name": "Experiment tracking and reproducibility",
+      "description": "Versioned experiments, reproducible notebooks, random seeds, and model documentation.",
+      "aliases": ["reproducibilidad", "experimentos", "tracking"],
       "prerequisites": ["skill_07"]
     },
     {
       "id": "skill_11",
-      "name": "Habilidad 11",
-      "description": "Conecta la habilidad 9 con un último salto.",
+      "name": "Machine learning deployment basics",
+      "description": "Packaging a trained model, creating a simple inference service, and documenting inputs/outputs.",
+      "aliases": ["despliegue de modelos", "ml deployment", "api de inferencia"],
       "prerequisites": ["skill_09", "skill_10"]
     },
     {
       "id": "skill_12",
-      "name": "Habilidad 12",
-      "description": "Habilidad final del catálogo de prueba.",
-      "prerequisites": ["skill_11"]
+      "name": "End-to-end data science project",
+      "description": "Complete portfolio project from raw data to validated model and deployment-ready explanation.",
+      "aliases": ["proyecto final de ciencia de datos", "portfolio data science", "habilidad 12"],
+      "prerequisites": ["skill_05", "skill_08", "skill_11"]
     }
   ],
   "relationships": [
     {"from": "skill_01", "to": "skill_02"},
-    {"from": "skill_02", "to": "skill_03"},
     {"from": "skill_02", "to": "skill_04"},
-    {"from": "skill_03", "to": "skill_05"},
+    {"from": "skill_02", "to": "skill_05"},
+    {"from": "skill_02", "to": "skill_06"},
+    {"from": "skill_03", "to": "skill_06"},
     {"from": "skill_04", "to": "skill_06"},
-    {"from": "skill_05", "to": "skill_06"},
-    {"from": "skill_05", "to": "skill_07"},
+    {"from": "skill_04", "to": "skill_07"},
+    {"from": "skill_04", "to": "skill_08"},
+    {"from": "skill_06", "to": "skill_07"},
     {"from": "skill_06", "to": "skill_08"},
-    {"from": "skill_07", "to": "skill_08"},
-    {"from": "skill_08", "to": "skill_09"},
+    {"from": "skill_07", "to": "skill_09"},
     {"from": "skill_07", "to": "skill_10"},
     {"from": "skill_09", "to": "skill_11"},
     {"from": "skill_10", "to": "skill_11"},
+    {"from": "skill_05", "to": "skill_12"},
+    {"from": "skill_08", "to": "skill_12"},
     {"from": "skill_11", "to": "skill_12"}
   ]
 }
