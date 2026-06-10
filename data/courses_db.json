@@ -82,6 +82,16 @@
       "outcomes": ["skill_08"]
     },
     {
+      "id": "course_11",
+      "title": "Machine Learning Intensive Track",
+      "description": "Compresses feature engineering, supervised learning, and unsupervised exploration into one applied track.",
+      "provider": "Machine Learning Guild",
+      "duration_hours": 42,
+      "cost": 9,
+      "prerequisites": ["skill_04"],
+      "outcomes": ["skill_06", "skill_07", "skill_08"]
+    },
+    {
       "id": "course_09",
       "title": "Reliable Model Evaluation",
       "description": "Covers metric selection, cross-validation, baselines, experiment notes, and reproducibility habits.",
@@ -100,6 +110,29 @@
       "cost": 5,
       "prerequisites": ["skill_05", "skill_08", "skill_09", "skill_10"],
       "outcomes": ["skill_11", "skill_12"]
+    },
+    {
+      "id": "course_12",
+      "title": "Zero-to-Capstone Data Science Bootcamp",
+      "description": "A complete but expensive all-in-one program that covers the entire junior data science path.",
+      "provider": "Premium Career School",
+      "duration_hours": 120,
+      "cost": 45,
+      "prerequisites": [],
+      "outcomes": [
+        "skill_01",
+        "skill_02",
+        "skill_03",
+        "skill_04",
+        "skill_05",
+        "skill_06",
+        "skill_07",
+        "skill_08",
+        "skill_09",
+        "skill_10",
+        "skill_11",
+        "skill_12"
+      ]
     }
   ]
 }
