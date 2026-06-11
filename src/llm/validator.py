@@ -49,6 +49,10 @@ def validate_path(
     if not path:
         return {
             "valid": False,
+            "executed": [],
+            "steps": [],
+            "step_count": 0,
+            "total_cost": 0.0,
             "final_skills": sorted((initial_state or State()).skills),
             "notes": "La ruta esta vacia.",
         }
@@ -56,6 +60,10 @@ def validate_path(
     if actions is None or initial_state is None or goal_skill is None:
         return {
             "valid": bool(path),
+            "executed": path,
+            "steps": [],
+            "step_count": len(path),
+            "total_cost": None,
             "final_skills": [],
             "notes": "Validacion superficial: faltan estado inicial, meta o acciones.",
         }
@@ -64,6 +72,10 @@ def validate_path(
     if known_skills and goal_skill not in known_skills:
         return {
             "valid": False,
+            "executed": [],
+            "steps": [],
+            "step_count": 0,
+            "total_cost": 0.0,
             "final_skills": sorted(initial_state.skills),
             "notes": f"La meta '{goal_skill}' no existe en el catalogo.",
         }
@@ -71,6 +83,8 @@ def validate_path(
     action_by_name = {action.name: action for action in actions}
     state = initial_state
     executed: list[str] = []
+    step_details: list[dict[str, Any]] = []
+    total_cost = 0.0
 
     for step in path:
         action = action_by_name.get(step)
@@ -78,6 +92,9 @@ def validate_path(
             return {
                 "valid": False,
                 "executed": executed,
+                "steps": step_details,
+                "step_count": len(executed),
+                "total_cost": total_cost,
                 "final_skills": sorted(state.skills),
                 "notes": f"El curso '{step}' no existe en el catalogo.",
             }
@@ -86,16 +103,33 @@ def validate_path(
             return {
                 "valid": False,
                 "executed": executed,
+                "steps": step_details,
+                "step_count": len(executed),
+                "total_cost": total_cost,
                 "final_skills": sorted(state.skills),
                 "notes": f"El curso '{step}' no es aplicable. Faltan: {missing}.",
             }
+        previous_skills = set(state.skills)
         state = state.apply(action)
+        gained_skills = sorted(set(state.skills).difference(previous_skills))
+        total_cost += action.cost
         executed.append(step)
+        step_details.append(
+            {
+                "course": action.name,
+                "cost": action.cost,
+                "gained_skills": gained_skills,
+                "resulting_skills": sorted(state.skills),
+            }
+        )
 
     reached_goal = goal_skill in state.skills
     return {
         "valid": reached_goal,
         "executed": executed,
+        "steps": step_details,
+        "step_count": len(executed),
+        "total_cost": total_cost,
         "final_skills": sorted(state.skills),
         "notes": "La ruta alcanza la meta." if reached_goal else "La ruta termina sin alcanzar la meta.",
     }

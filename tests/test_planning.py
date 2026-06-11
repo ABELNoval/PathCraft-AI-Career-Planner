@@ -30,6 +30,10 @@ def test_find_path_reaches_data_science_goal_from_scratch() -> None:
 
     assert path
     assert validation["valid"] is True
+    assert validation["step_count"] == len(path)
+    assert validation["total_cost"] == _path_cost(path, actions)
+    assert validation["steps"][0]["course"] == path[0]
+    assert validation["steps"][-1]["gained_skills"] == ["skill_11", "skill_12"]
     assert "End-to-End Data Science Capstone" in path
     assert "Zero-to-Capstone Data Science Bootcamp" not in path
 
@@ -62,6 +66,8 @@ def test_validate_path_rejects_wrong_course_order() -> None:
     )
 
     assert validation["valid"] is False
+    assert validation["total_cost"] == 0.0
+    assert validation["step_count"] == 0
     assert "no es aplicable" in validation["notes"]
 
 
