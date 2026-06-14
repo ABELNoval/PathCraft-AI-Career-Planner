@@ -1,16 +1,57 @@
 # PathCraft: AI Career Path Planner
 
-PathCraft is an academic AI project that combines classical planning with a lightweight natural-language goal translator. Given a learner's current skills and a career target, it searches a course catalog and proposes a valid learning route.
+PathCraft is an academic Artificial Intelligence project that combines Large Language Models (LLMs), STRIPS planning, and heuristic search to generate personalized learning paths.
 
-The current catalog models a semirealistic path toward a **Data Scientist Junior** profile.
+Given a learner's current skills and a career goal expressed in natural language, the system translates the objective into a formal planning goal, searches a catalog of courses and skills, and generates an optimal learning route based on course costs and prerequisite constraints.
+
+The project was developed as part of an Artificial Intelligence course and demonstrates the integration of symbolic planning techniques with modern language models.
 
 ## Features
 
-- STRIPS-style representation of learner states and course actions.
-- A* search over the skill graph.
-- Local heuristic goal parser for skill names, skill IDs, aliases, and the Data Scientist target role.
-- Catalog-backed route validation that checks course order, prerequisites, unknown courses, unknown skills, and final goal reachability.
-- Pytest suite for data loading, goal parsing, planning, and validation.
+* Natural-language career goal interpretation using a local LLM.
+* STRIPS-style representation of states, skills, and course actions.
+* A* search for optimal learning path generation.
+* Relaxed-cost admissible heuristic for cost-based planning.
+* Goal translation validation.
+* Route validation based on prerequisites and acquired skills.
+* Support for multiple alternative learning paths.
+* Fully local execution through Ollama.
+
+## Technologies
+
+* Python 3
+* Ollama
+* Gemma4:e4b
+* STRIPS Planning
+* A* Search
+* JSON
+
+## System Architecture
+
+```text
+User Goal
+     |
+     v
++-------------------+
+| Gemma4:e4b (LLM)  |
+| via Ollama        |
++-------------------+
+     |
+     v
+Goal Translation
+     |
+     v
+Goal Validation
+     |
+     v
+STRIPS Planner
+     |
+     v
+A* Search + Relaxed Cost Heuristic
+     |
+     v
+Optimal Learning Route
+```
 
 ## Project Structure
 
@@ -20,9 +61,9 @@ PathCraft-AI-Career-Planner/
 |-- docs/                  # Technical report
 |-- src/
 |   |-- main.py            # CLI entry point
-|   |-- planning/          # STRIPS model and A* search
-|   |-- llm/               # Local natural-language goal parser and validation
-|   `-- utils/             # Data loading and formatting helpers
+|   |-- planning/          # STRIPS model and search algorithms
+|   |-- llm/               # LLM integration, parsing and validation
+|   `-- utils/             # Data loading utilities
 |-- tests/                 # Automated tests
 |-- requirements.txt
 `-- README.md
@@ -30,10 +71,24 @@ PathCraft-AI-Career-Planner/
 
 ## Setup
 
+Create and activate a virtual environment:
+
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
+```
+
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
+```
+
+Install and run Ollama:
+
+```bash
+ollama pull gemma4:e4b
+ollama serve
 ```
 
 ## Run
@@ -41,24 +96,40 @@ pip install -r requirements.txt
 From the project root:
 
 ```bash
-python src/main.py --current_skills "Python fundamentals" --target "Data Scientist"
+python src/main.py --current_skills "..." --target "..."
 ```
 
-Other useful examples:
+## Heuristic
 
-```bash
-python src/main.py --current_skills skill_01 --target "Habilidad 12"
-python src/main.py --current_skills "Python fundamentals, SQL querying" --target skill_12
-python src/main.py --target "Quiero ser Data Scientist"
-```
+The planner uses a relaxed-cost admissible heuristic.
 
-## Test
+For every missing goal skill, the heuristic recursively estimates the minimum remaining cost required to obtain it by analyzing available courses and prerequisite chains.
 
-```bash
-python -m pytest tests
-```
+This estimation never overestimates the true remaining cost, allowing A* to preserve optimality while exploring significantly fewer states.
 
-## Notes
+## Current Career Paths
 
-- The project intentionally avoids a mandatory external LLM dependency. The `src/llm` package implements the language-to-goal role locally so the planner remains reproducible offline.
-- If an external LLM is required later, it should be added as an optional adapter and keep the current parser as the fallback.
+The catalog currently contains learning routes related to:
+
+* Data Analysis
+* Data Science
+* Machine Learning
+* Data Engineering
+
+Each path can be reached through different combinations of courses, allowing the planner to compare alternative routes and choose the least costly solution.
+
+## Limitations
+
+* Recommendations are limited to the skills available in the catalog.
+* Course costs are manually defined.
+* The planner currently optimizes only one objective (cost).
+* User preferences are not yet considered.
+* The quality of recommendations depends on catalog completeness.
+
+## Future Improvements
+
+* Multi-objective optimization (cost, duration, difficulty).
+* Larger and more realistic course catalogs.
+* Personalized recommendations based on user profiles.
+* Dynamic catalog generation.
+* Support for additional professional domains.
