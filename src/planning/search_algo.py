@@ -53,12 +53,6 @@ def build_relaxed_cost_heuristic(goal_skills: Iterable[str], actions: Iterable[A
         total = 0.0
         for skill in missing:
             total += estimate_skill_cost(skill, set(state.skills), set())
-        print(
-            "H:",
-            sorted(state.skills),
-            "->",
-            total
-        )
         return total
 
     return heuristic

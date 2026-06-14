@@ -71,28 +71,70 @@ def main() -> int:
     initial_state = State.from_iterable(current_skills)
     actions = [Action.from_course_record(course) for course in courses_catalog]
 
-    print("PathCraft listo para planear rutas de aprendizaje.")
-    print(f"Meta original: {args.target}")
-    print(f"Meta formal: {goal_validation['target_skills']}")
-    print(f"Validacion del traductor: {goal_validation}")
+    print("\n" + "=" * 60)
+    print("PATHCRAFT AI CAREER PLANNER")
+    print("=" * 60)
 
-    if goal_validation["valid"]:
-        path = find_path(
-            initial_state,
-            goal_skills,
-            actions
-)
-        print(f"Ruta sugerida: {path}")
-        path_validation = validate_path(
-            path,
-            initial_state=initial_state,
-            goal_skills=goal_skills,
-            actions=actions,
-            skills_catalog=skills_catalog,
-        )
-        print(f"Validacion de ruta: {path_validation}")
+    print("\nObjetivo solicitado:")
+    print(f"  {args.target}")
+
+    if not goal_validation["valid"]:
+        print("\nResultado:")
+        print("  No fue posible asociar la meta a ninguna habilidad del catalogo.")
+        return 0
+
+    print("\nObjetivo interpretado:")
+    for skill in goal_validation["target_skills"]:
+        print(f"  - {skill}")
+
+    path = find_path(
+        initial_state,
+        goal_skills,
+        actions
+    )
+
+    print("\nRuta de aprendizaje recomendada:")
+    print("-" * 60)
+
+    if not path:
+        print("No se encontro una ruta valida.")
+        return 0
+
+    course_costs = {
+        course["title"]: course["cost"]
+        for course in courses_catalog
+    }
+
+    total_cost = 0
+
+    for index, course_name in enumerate(path, start=1):
+        cost = course_costs.get(course_name, 0)
+        total_cost += cost
+
+        print(f"{index}. {course_name}")
+        print(f"   Coste: {cost}")
+
+    path_validation = validate_path(
+        path,
+        initial_state=initial_state,
+        goal_skills=goal_skills,
+        actions=actions,
+        skills_catalog=skills_catalog,
+    )
+
+    print("\n" + "-" * 60)
+    print("RESUMEN")
+    print("-" * 60)
+
+    print(f"Cursos requeridos : {len(path)}")
+    print(f"Coste total       : {total_cost}")
+
+    if path_validation["valid"]:
+        print("Ruta valida       : SI")
     else:
-        print("No se pudo inferir una meta formal.")
+        print("Ruta valida       : NO")
+
+    print("=" * 60)
 
     return 0
 

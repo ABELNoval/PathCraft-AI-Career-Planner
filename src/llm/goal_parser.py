@@ -161,9 +161,6 @@ User goal:
         )
 
         try:
-            print("\n===== RESPUESTA DEL LLM =====")
-            print(response)
-            print("=============================\n")
             result = json.loads(response)
 
             if "target_skills" not in result:
