@@ -4,12 +4,15 @@ from __future__ import annotations
 
 import argparse
 
-from llm.goal_parser import parse_goal
+from llm.client import LLMClient
+from llm.goal_parser import GoalParser
 from llm.validator import validate_goal_translation, validate_path
 from planning.search_algo import find_path
 from planning.strips_model import Action, State
 from utils.data_loader import load_courses, load_skills
 
+llm = LLMClient()
+parse = GoalParser(llm)
 
 def build_parser() -> argparse.ArgumentParser:
     """Construye la interfaz de linea de comandos del proyecto."""
@@ -50,8 +53,19 @@ def main() -> int:
     skills_catalog = skills_data.get("skills", [])
     courses_catalog = load_courses().get("courses", [])
 
-    parsed_goal = parse_goal(args.target, skills_data)
-    goal_validation = validate_goal_translation(parsed_goal, skills_catalog)
+    parsed_goal = parse.parse_goal(
+        args.target,
+        skills_data
+    )
+
+    goal_validation = validate_goal_translation(
+        parsed_goal,
+        skills_catalog
+    )
+
+    goal_skills = set(
+        goal_validation["target_skills"]
+    )
 
     current_skills = _normalize_current_skills(_parse_skill_list(args.current_skills), skills_catalog)
     initial_state = State.from_iterable(current_skills)
@@ -59,16 +73,20 @@ def main() -> int:
 
     print("PathCraft listo para planear rutas de aprendizaje.")
     print(f"Meta original: {args.target}")
-    print(f"Meta formal: {parsed_goal['goal_skill_id']}")
+    print(f"Meta formal: {goal_validation['target_skills']}")
     print(f"Validacion del traductor: {goal_validation}")
 
     if goal_validation["valid"]:
-        path = find_path(initial_state, parsed_goal["goal_skill_id"], actions)
+        path = find_path(
+            initial_state,
+            goal_skills,
+            actions
+)
         print(f"Ruta sugerida: {path}")
         path_validation = validate_path(
             path,
             initial_state=initial_state,
-            goal_skill=parsed_goal["goal_skill_id"],
+            goal_skills=goal_skills,
             actions=actions,
             skills_catalog=skills_catalog,
         )

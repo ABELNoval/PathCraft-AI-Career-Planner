@@ -116,14 +116,14 @@ def astar(
     return []
 
 
-def find_path(initial_state: State, goal_skill: str, actions: Iterable[Action]) -> List[str]:
+def find_path(initial_state: State,  goal_skills: set[str], actions: Iterable[Action]) -> List[str]:
     """Busca una secuencia de cursos que consiga la habilidad objetivo."""
 
     action_list = list(actions)
-    heuristic_fn = build_relaxed_cost_heuristic(goal_skill, action_list)
+    heuristic_fn = build_missing_skills_heuristic(goal_skills)
     route = astar(
         start=initial_state,
-        goal_test=lambda state: goal_skill in state.skills,
+        goal_test=lambda state: goal_skills.issubset(state.skills),
         neighbors_fn=lambda state: successor_states(state, action_list),
         heuristic_fn=heuristic_fn,
     )

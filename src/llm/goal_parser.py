@@ -1,6 +1,8 @@
 import json
+from typing import Any
+from urllib import response
 
-from src.llm.client import LLMClient
+from llm.client import LLMClient
 
 
 class GoalParser:
@@ -11,28 +13,101 @@ class GoalParser:
     def parse_goal(
         self,
         goal_text: str,
-        available_skills: list[str]
+        available_skills: dict[str, Any]
     ) -> dict:
 
         prompt = f"""
 You are a career planning assistant.
 
-Your task is to map a user's professional goal to skills.
+Your task is to translate a user's professional goal into the final skills that best represent that goal.
+
+IMPORTANT:
+
+You are NOT a planner.
+
+You are NOT responsible for finding prerequisite skills.
+
+You are NOT responsible for building a learning path.
+
+A separate planning system will discover prerequisites and learning sequences later.
+
+Your job is ONLY to identify the final skills explicitly requested or implied by the user's goal.
 
 IMPORTANT RULES:
 
-1. Use ONLY skills from the provided list.
-2. Never invent skills.
-3. Never explain your reasoning.
-4. Return ONLY valid JSON.
-5. The JSON must have exactly this structure:
+1. Use ONLY skills that exist in the provided catalog.
+2. Never invent skill IDs.
+3. Never invent skills.
+4. Do NOT include prerequisite skills.
+5. Do NOT include intermediate skills.
+6. Include ONLY the final target skills that represent the user's goal.
+7. If the user asks for multiple goals, return multiple skills.
+8. If no skill reasonably matches the user's goal, return an empty list.
+9. Return ONLY valid JSON.
+10. Do NOT explain your reasoning.
+11. Do NOT include comments.
+12. Do NOT include markdown.
+13. Do NOT wrap the response in ```json blocks.
+14. The first character of your response must be '{{'.
+15. The last character of your response must be '}}'.
 
+Examples:
+
+User:
+"I want to learn machine learning"
+
+Output:
 {{
-    "target_role": "...",
-    "target_skills": [...]
+    "target_role": "",
+    "target_skills": ["skill_07"]
 }}
 
-Available skills:
+User:
+"I want to learn data visualization"
+
+Output:
+{{
+    "target_role": "",
+    "target_skills": ["skill_05"]
+}}
+
+User:
+"I want to learn machine learning and data visualization"
+
+Output:
+{{
+    "target_role": "",
+    "target_skills": ["skill_07", "skill_05"]
+}}
+
+User:
+"I want to become a Data Scientist Junior"
+
+Output:
+{{
+    "target_role": "role_data_scientist_junior",
+    "target_skills": ["skill_12"]
+}}
+
+User:
+"I want to become an astronaut"
+
+Output:
+{{
+    "target_role": "",
+    "target_skills": []
+}}
+
+Output format:
+
+{{
+    "target_role": "role_xxx",
+    "target_skills": [
+        "skill_xx"
+    ]
+}}
+
+Available catalog:
 {json.dumps(available_skills, indent=2)}
 
 User goal:
@@ -45,8 +120,15 @@ User goal:
         )
 
         try:
-
+            print("\n===== RESPUESTA DEL LLM =====")
+            print(response)
+            print("=============================\n")
             result = json.loads(response)
+
+            if "target_role" not in result:
+                raise ValueError(
+                    "Missing 'target_role' field."
+                )
 
             if "target_skills" not in result:
                 raise ValueError(
@@ -60,6 +142,12 @@ User goal:
                 raise ValueError(
                     "'target_skills' must be a list."
                 )
+
+            for skill_id in result["target_skills"]:
+                if not isinstance(skill_id, str):
+                    raise ValueError(
+                        "All target_skills entries must be strings."
+                    )
 
             return result
 

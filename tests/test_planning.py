@@ -19,11 +19,11 @@ def test_find_path_reaches_data_science_goal_from_scratch() -> None:
     actions = _actions()
     initial_state = State.from_iterable([])
 
-    path = find_path(initial_state, "skill_12", actions)
+    path = find_path(initial_state, {"skill_12"}, actions)
     validation = validate_path(
         path,
         initial_state=initial_state,
-        goal_skill="skill_12",
+        goal_skills={"skill_12"},
         actions=actions,
         skills_catalog=load_skills()["skills"],
     )
@@ -41,7 +41,7 @@ def test_find_path_reaches_data_science_goal_from_scratch() -> None:
 def test_find_path_prefers_lower_cost_alternative_track() -> None:
     actions = _actions()
 
-    path = find_path(State.from_iterable([]), "skill_12", actions)
+    path = find_path(State.from_iterable([]), {"skill_12"}, actions)
 
     assert "Machine Learning Intensive Track" in path
     assert "Feature Engineering Workshop" not in path
@@ -51,7 +51,7 @@ def test_find_path_prefers_lower_cost_alternative_track() -> None:
 
 
 def test_find_path_returns_empty_for_unreachable_goal() -> None:
-    path = find_path(State.from_iterable([]), "skill_99", _actions())
+    path = find_path(State.from_iterable([]), {"skill_99"}, _actions())
 
     assert path == []
 
@@ -60,7 +60,7 @@ def test_validate_path_rejects_wrong_course_order() -> None:
     validation = validate_path(
         ["Applied Supervised Machine Learning"],
         initial_state=State.from_iterable([]),
-        goal_skill="skill_12",
+        goal_skills={"skill_12"},
         actions=_actions(),
         skills_catalog=load_skills()["skills"],
     )

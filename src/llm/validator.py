@@ -18,20 +18,28 @@ def validate_goal_translation(
     parsed_goal: dict[str, Any],
     skills_catalog: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    """Valida que el objetivo formal exista y, si hay catalogo, pertenezca a el."""
 
-    goal_skill_id = str(parsed_goal.get("goal_skill_id", "")).strip()
+    target_skills = parsed_goal.get("target_skills", [])
+
     known_skills = _known_skill_ids(skills_catalog)
-    valid = bool(goal_skill_id) and (not known_skills or goal_skill_id in known_skills)
-    if not goal_skill_id:
-        notes = "No se pudo inferir una habilidad objetivo."
-    elif known_skills and goal_skill_id not in known_skills:
-        notes = f"La habilidad objetivo '{goal_skill_id}' no existe en el catalogo."
+
+    valid = (
+        len(target_skills) > 0
+        and all(skill in known_skills for skill in target_skills)
+    )
+
+    if not target_skills:
+        notes = "No se pudo inferir ninguna habilidad objetivo."
+
+    elif not all(skill in known_skills for skill in target_skills):
+        notes = "Algunas habilidades objetivo no existen en el catalogo."
+
     else:
-        notes = "Objetivo formal encontrado en el catalogo."
+        notes = "Objetivos formales encontrados en el catalogo."
+
     return {
         "valid": valid,
-        "goal_skill_id": goal_skill_id,
+        "target_skills": target_skills,
         "notes": notes,
     }
 
@@ -40,7 +48,7 @@ def validate_path(
     path: list[str],
     *,
     initial_state: State | None = None,
-    goal_skill: str | None = None,
+    goal_skills: set[str] | None = None,
     actions: list[Action] | None = None,
     skills_catalog: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
@@ -57,7 +65,7 @@ def validate_path(
             "notes": "La ruta esta vacia.",
         }
 
-    if actions is None or initial_state is None or goal_skill is None:
+    if actions is None or initial_state is None or goal_skills is None:
         return {
             "valid": bool(path),
             "executed": path,
@@ -69,7 +77,8 @@ def validate_path(
         }
 
     known_skills = _known_skill_ids(skills_catalog)
-    if known_skills and goal_skill not in known_skills:
+    invalid_skills = goal_skills.difference(known_skills)
+    if known_skills and invalid_skills:
         return {
             "valid": False,
             "executed": [],
@@ -77,7 +86,7 @@ def validate_path(
             "step_count": 0,
             "total_cost": 0.0,
             "final_skills": sorted(initial_state.skills),
-            "notes": f"La meta '{goal_skill}' no existe en el catalogo.",
+            "notes": f"La meta '{sorted(invalid_skills)}' no existe en el catalogo.",
         }
 
     action_by_name = {action.name: action for action in actions}
@@ -123,7 +132,7 @@ def validate_path(
             }
         )
 
-    reached_goal = goal_skill in state.skills
+    reached_goal = goal_skills.issubset(state.skills)
     return {
         "valid": reached_goal,
         "executed": executed,
