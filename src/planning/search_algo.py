@@ -10,29 +10,7 @@ from .strips_model import Action, State
 
 Neighbor = Tuple[State, float, Action]
 
-
-def build_missing_skills_heuristic(goal_skills: Iterable[str]) -> Callable[[State], float]:
-    """Construye una heuristica admisible que cuenta habilidades objetivo faltantes.
-
-    Si el objetivo es un conjunto de habilidades, esta estimacion nunca supera
-    el coste real minimo cuando cada curso tiene coste unitario.
-    """
-
-    goal_set: Set[str] = set(goal_skills)
-
-    def heuristic(state: State) -> float:
-        return float(len(goal_set.difference(state.skills)))
-
-    return heuristic
-
-
-def goal_skill_heuristic(goal_skill: str) -> Callable[[State], float]:
-    """Heuristica conveniencia para una unica habilidad meta."""
-
-    return build_missing_skills_heuristic([goal_skill])
-
-
-def build_relaxed_cost_heuristic(goal_skill: str, actions: Iterable[Action]) -> Callable[[State], float]:
+def build_relaxed_cost_heuristic(goal_skills: Iterable[str], actions: Iterable[Action]) -> Callable[[State], float]:
     """Estima un coste restante conservador usando prerequisitos relajados.
 
     Para una habilidad faltante, estima el coste del curso mas barato que la
@@ -66,8 +44,22 @@ def build_relaxed_cost_heuristic(goal_skill: str, actions: Iterable[Action]) -> 
         return best_cost
 
     def heuristic(state: State) -> float:
-        estimate = estimate_skill_cost(goal_skill, set(state.skills), set())
-        return 0.0 if estimate == float("inf") else estimate
+        goal_set = set(goal_skills)
+        known_skills = set(state.skills)
+        missing = goal_set - known_skills
+        if not missing:
+            return 0.0
+
+        total = 0.0
+        for skill in missing:
+            total += estimate_skill_cost(skill, set(state.skills), set())
+        print(
+            "H:",
+            sorted(state.skills),
+            "->",
+            total
+        )
+        return total
 
     return heuristic
 
@@ -120,7 +112,7 @@ def find_path(initial_state: State,  goal_skills: set[str], actions: Iterable[Ac
     """Busca una secuencia de cursos que consiga la habilidad objetivo."""
 
     action_list = list(actions)
-    heuristic_fn = build_missing_skills_heuristic(goal_skills)
+    heuristic_fn = build_relaxed_cost_heuristic(goal_skills, action_list)
     route = astar(
         start=initial_state,
         goal_test=lambda state: goal_skills.issubset(state.skills),

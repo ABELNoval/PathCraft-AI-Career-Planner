@@ -1,121 +1,174 @@
 {
-  "description": "Catalogo semirrealista de habilidades para una ruta hacia Data Scientist Junior.",
-  "target_roles": [
-    {
-      "id": "role_data_scientist_junior",
-      "name": "Data Scientist Junior",
-      "goal_skill_id": "skill_12",
-      "aliases": [
-        "data scientist",
-        "cientifico de datos",
-        "cientifica de datos",
-        "analista de datos avanzado"
-      ]
-    }
-  ],
+  "description": "Career planning domain for Data and Artificial Intelligence professions.",
+
   "skills": [
     {
       "id": "skill_01",
       "name": "Python fundamentals",
-      "description": "Variables, control flow, functions, modules, virtual environments, and basic scripting.",
-      "aliases": ["python", "programacion en python", "fundamentos de python"],
+      "aliases": ["python"],
       "prerequisites": []
     },
+
     {
       "id": "skill_02",
-      "name": "Data analysis with pandas",
-      "description": "Tabular data cleaning, joins, aggregation, missing values, and exploratory workflows.",
-      "aliases": ["pandas", "analisis de datos", "limpieza de datos"],
-      "prerequisites": ["skill_01"]
-    },
-    {
-      "id": "skill_03",
       "name": "SQL querying",
-      "description": "SELECT queries, joins, filters, grouping, and database-backed analysis.",
-      "aliases": ["sql", "consultas sql", "bases de datos"],
+      "aliases": ["sql", "bases de datos"],
       "prerequisites": []
     },
+
+    {
+      "id": "skill_03",
+      "name": "Statistics fundamentals",
+      "aliases": ["statistics", "estadistica"],
+      "prerequisites": []
+    },
+
     {
       "id": "skill_04",
-      "name": "Statistics for data science",
-      "description": "Distributions, sampling, confidence intervals, hypothesis testing, and correlation.",
-      "aliases": ["estadistica", "probabilidad", "statistics"],
-      "prerequisites": ["skill_02"]
+      "name": "Data visualization",
+      "aliases": ["visualization", "dashboarding"],
+      "prerequisites": ["skill_03"]
     },
+
     {
       "id": "skill_05",
-      "name": "Data visualization",
-      "description": "Charts, dashboards, visual encodings, and communication of analytical findings.",
-      "aliases": ["visualizacion", "graficos", "dashboards"],
-      "prerequisites": ["skill_02"]
+      "name": "Business analytics",
+      "aliases": ["analytics"],
+      "prerequisites": [
+        "skill_02",
+        "skill_03",
+        "skill_04"
+      ]
     },
+
     {
       "id": "skill_06",
-      "name": "Feature engineering",
-      "description": "Encoding, scaling, feature extraction, leakage control, and train/test preparation.",
-      "aliases": ["feature engineering", "ingenieria de variables"],
-      "prerequisites": ["skill_02", "skill_04"]
+      "name": "Dashboard development",
+      "aliases": ["power bi", "tableau"],
+      "prerequisites": [
+        "skill_02",
+        "skill_04"
+      ]
     },
+
     {
       "id": "skill_07",
-      "name": "Supervised machine learning",
-      "description": "Regression, classification, model fitting, metrics, and cross-validation.",
-      "aliases": ["machine learning", "aprendizaje supervisado", "ml supervisado"],
-      "prerequisites": ["skill_04", "skill_06"]
+      "name": "Data analyst portfolio",
+      "aliases": ["data analyst"],
+      "prerequisites": [
+        "skill_05",
+        "skill_06"
+      ]
     },
+
     {
       "id": "skill_08",
-      "name": "Unsupervised learning",
-      "description": "Clustering, dimensionality reduction, anomaly exploration, and segment discovery.",
-      "aliases": ["clustering", "aprendizaje no supervisado"],
-      "prerequisites": ["skill_04", "skill_06"]
+      "name": "Data wrangling",
+      "aliases": ["pandas", "data cleaning"],
+      "prerequisites": ["skill_01"]
     },
+
     {
       "id": "skill_09",
-      "name": "Model evaluation and selection",
-      "description": "Metric choice, validation strategy, bias/variance tradeoffs, and baseline comparison.",
-      "aliases": ["evaluacion de modelos", "seleccion de modelos", "metricas"],
-      "prerequisites": ["skill_07"]
+      "name": "Feature engineering",
+      "aliases": ["feature engineering"],
+      "prerequisites": [
+        "skill_03",
+        "skill_08"
+      ]
     },
+
     {
       "id": "skill_10",
-      "name": "Experiment tracking and reproducibility",
-      "description": "Versioned experiments, reproducible notebooks, random seeds, and model documentation.",
-      "aliases": ["reproducibilidad", "experimentos", "tracking"],
-      "prerequisites": ["skill_07"]
+      "name": "Supervised machine learning",
+      "aliases": ["machine learning", "ml"],
+      "prerequisites": ["skill_09"]
     },
+
     {
       "id": "skill_11",
-      "name": "Machine learning deployment basics",
-      "description": "Packaging a trained model, creating a simple inference service, and documenting inputs/outputs.",
-      "aliases": ["despliegue de modelos", "ml deployment", "api de inferencia"],
-      "prerequisites": ["skill_09", "skill_10"]
+      "name": "Unsupervised learning",
+      "aliases": ["clustering"],
+      "prerequisites": ["skill_09"]
     },
+
     {
       "id": "skill_12",
-      "name": "End-to-end data science project",
-      "description": "Complete portfolio project from raw data to validated model and deployment-ready explanation.",
-      "aliases": ["proyecto final de ciencia de datos", "portfolio data science", "habilidad 12"],
-      "prerequisites": ["skill_05", "skill_08", "skill_11"]
+      "name": "Model evaluation",
+      "aliases": ["cross validation"],
+      "prerequisites": ["skill_10"]
+    },
+
+    {
+      "id": "skill_13",
+      "name": "Data scientist portfolio",
+      "aliases": ["data scientist"],
+      "prerequisites": [
+        "skill_11",
+        "skill_12"
+      ]
+    },
+
+    {
+      "id": "skill_14",
+      "name": "Deep learning",
+      "aliases": ["neural networks"],
+      "prerequisites": ["skill_10"]
+    },
+
+    {
+      "id": "skill_15",
+      "name": "Model deployment",
+      "aliases": ["deployment"],
+      "prerequisites": ["skill_12"]
+    },
+
+    {
+      "id": "skill_16",
+      "name": "MLOps fundamentals",
+      "aliases": ["mlops"],
+      "prerequisites": ["skill_15"]
+    },
+
+    {
+      "id": "skill_17",
+      "name": "Machine learning engineer",
+      "aliases": ["ml engineer"],
+      "prerequisites": [
+        "skill_14",
+        "skill_16"
+      ]
+    },
+
+    {
+      "id": "skill_18",
+      "name": "Database engineering",
+      "aliases": ["database design"],
+      "prerequisites": ["skill_02"]
+    },
+
+    {
+      "id": "skill_19",
+      "name": "ETL pipelines",
+      "aliases": ["etl"],
+      "prerequisites": [
+        "skill_08",
+        "skill_18"
+      ]
+    },
+
+    {
+      "id": "skill_20",
+      "name": "Big data processing",
+      "aliases": ["spark", "hadoop"],
+      "prerequisites": ["skill_19"]
+    },
+
+    {
+      "id": "skill_21",
+      "name": "Data engineer",
+      "aliases": ["data engineer"],
+      "prerequisites": ["skill_20"]
     }
-  ],
-  "relationships": [
-    {"from": "skill_01", "to": "skill_02"},
-    {"from": "skill_02", "to": "skill_04"},
-    {"from": "skill_02", "to": "skill_05"},
-    {"from": "skill_02", "to": "skill_06"},
-    {"from": "skill_03", "to": "skill_06"},
-    {"from": "skill_04", "to": "skill_06"},
-    {"from": "skill_04", "to": "skill_07"},
-    {"from": "skill_04", "to": "skill_08"},
-    {"from": "skill_06", "to": "skill_07"},
-    {"from": "skill_06", "to": "skill_08"},
-    {"from": "skill_07", "to": "skill_09"},
-    {"from": "skill_07", "to": "skill_10"},
-    {"from": "skill_09", "to": "skill_11"},
-    {"from": "skill_10", "to": "skill_11"},
-    {"from": "skill_05", "to": "skill_12"},
-    {"from": "skill_08", "to": "skill_12"},
-    {"from": "skill_11", "to": "skill_12"}
   ]
 }

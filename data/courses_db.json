@@ -1,123 +1,244 @@
 {
-  "description": "Catalogo semirrealista de cursos para construir una ruta hacia Data Scientist Junior.",
+  "description": "Learning catalog with multiple alternative paths and different costs.",
+
   "courses": [
     {
       "id": "course_01",
-      "title": "Python Foundations for Data Work",
-      "description": "Introduces Python scripting, functions, modules, and practical exercises for data tasks.",
-      "provider": "PathCraft Academy",
-      "duration_hours": 18,
+      "title": "Python Foundations",
       "cost": 2,
       "prerequisites": [],
       "outcomes": ["skill_01"]
     },
+
     {
       "id": "course_02",
-      "title": "Practical Data Wrangling with pandas",
-      "description": "Covers loading, cleaning, merging, reshaping, and summarizing real tabular datasets.",
-      "provider": "PathCraft Academy",
-      "duration_hours": 22,
-      "cost": 3,
-      "prerequisites": ["skill_01"],
+      "title": "SQL Foundations",
+      "cost": 2,
+      "prerequisites": [],
       "outcomes": ["skill_02"]
     },
+
     {
       "id": "course_03",
-      "title": "SQL for Analysts",
-      "description": "Builds query skills for relational datasets, joins, grouping, and reusable analysis views.",
-      "provider": "Open Data Lab",
-      "duration_hours": 16,
+      "title": "Statistics Foundations",
       "cost": 2,
       "prerequisites": [],
       "outcomes": ["skill_03"]
     },
+
     {
       "id": "course_04",
-      "title": "Statistics for Decision Making",
-      "description": "Connects descriptive statistics, sampling, uncertainty, and hypothesis tests to analytics work.",
-      "provider": "PathCraft Academy",
-      "duration_hours": 24,
+      "title": "Data Visualization Essentials",
       "cost": 3,
-      "prerequisites": ["skill_02"],
+      "prerequisites": ["skill_03"],
       "outcomes": ["skill_04"]
     },
+
     {
       "id": "course_05",
-      "title": "Communicating Data with Visualizations",
-      "description": "Teaches chart selection, visual polish, and concise analytical storytelling.",
-      "provider": "Open Data Lab",
-      "duration_hours": 14,
-      "cost": 2,
-      "prerequisites": ["skill_02"],
+      "title": "Business Analytics",
+      "cost": 4,
+      "prerequisites": [
+        "skill_02",
+        "skill_03",
+        "skill_04"
+      ],
       "outcomes": ["skill_05"]
     },
+
     {
       "id": "course_06",
-      "title": "Feature Engineering Workshop",
-      "description": "Turns cleaned datasets into model-ready features using encoding, scaling, and leakage checks.",
-      "provider": "PathCraft Academy",
-      "duration_hours": 20,
+      "title": "Dashboard Development",
       "cost": 3,
-      "prerequisites": ["skill_02", "skill_03", "skill_04"],
+      "prerequisites": [
+        "skill_02",
+        "skill_04"
+      ],
       "outcomes": ["skill_06"]
     },
+
     {
       "id": "course_07",
-      "title": "Applied Supervised Machine Learning",
-      "description": "Trains and evaluates regression and classification models with practical validation routines.",
-      "provider": "Machine Learning Guild",
-      "duration_hours": 30,
+      "title": "Data Analyst Capstone",
       "cost": 4,
-      "prerequisites": ["skill_04", "skill_06"],
+      "prerequisites": [
+        "skill_05",
+        "skill_06"
+      ],
       "outcomes": ["skill_07"]
     },
+
     {
       "id": "course_08",
-      "title": "Unsupervised Learning for Exploration",
-      "description": "Uses clustering and dimensionality reduction to discover structure in unlabeled data.",
-      "provider": "Machine Learning Guild",
-      "duration_hours": 18,
+      "title": "Data Wrangling with Pandas",
       "cost": 3,
-      "prerequisites": ["skill_04", "skill_06"],
+      "prerequisites": ["skill_01"],
       "outcomes": ["skill_08"]
     },
-    {
-      "id": "course_11",
-      "title": "Machine Learning Intensive Track",
-      "description": "Compresses feature engineering, supervised learning, and unsupervised exploration into one applied track.",
-      "provider": "Machine Learning Guild",
-      "duration_hours": 42,
-      "cost": 9,
-      "prerequisites": ["skill_04"],
-      "outcomes": ["skill_06", "skill_07", "skill_08"]
-    },
+
     {
       "id": "course_09",
-      "title": "Reliable Model Evaluation",
-      "description": "Covers metric selection, cross-validation, baselines, experiment notes, and reproducibility habits.",
-      "provider": "Machine Learning Guild",
-      "duration_hours": 20,
-      "cost": 3,
-      "prerequisites": ["skill_07"],
-      "outcomes": ["skill_09", "skill_10"]
+      "title": "Feature Engineering",
+      "cost": 4,
+      "prerequisites": [
+        "skill_03",
+        "skill_08"
+      ],
+      "outcomes": ["skill_09"]
     },
+
     {
       "id": "course_10",
-      "title": "End-to-End Data Science Capstone",
-      "description": "Builds a portfolio-ready project with a validated model, explanation, and deployment outline.",
-      "provider": "PathCraft Academy",
-      "duration_hours": 36,
+      "title": "Supervised Machine Learning",
       "cost": 5,
-      "prerequisites": ["skill_05", "skill_08", "skill_09", "skill_10"],
-      "outcomes": ["skill_11", "skill_12"]
+      "prerequisites": ["skill_09"],
+      "outcomes": ["skill_10"]
     },
+
+    {
+      "id": "course_11",
+      "title": "Unsupervised Learning",
+      "cost": 4,
+      "prerequisites": ["skill_09"],
+      "outcomes": ["skill_11"]
+    },
+
     {
       "id": "course_12",
-      "title": "Zero-to-Capstone Data Science Bootcamp",
-      "description": "A complete but expensive all-in-one program that covers the entire junior data science path.",
-      "provider": "Premium Career School",
-      "duration_hours": 120,
-      "cost": 45,
+      "title": "Model Evaluation",
+      "cost": 3,
+      "prerequisites": ["skill_10"],
+      "outcomes": ["skill_12"]
+    },
+
+    {
+      "id": "course_13",
+      "title": "Data Science Portfolio Project",
+      "cost": 5,
+      "prerequisites": [
+        "skill_11",
+        "skill_12"
+      ],
+      "outcomes": ["skill_13"]
+    },
+
+    {
+      "id": "course_14",
+      "title": "Deep Learning Fundamentals",
+      "cost": 6,
+      "prerequisites": ["skill_10"],
+      "outcomes": ["skill_14"]
+    },
+
+    {
+      "id": "course_15",
+      "title": "Model Deployment",
+      "cost": 5,
+      "prerequisites": ["skill_12"],
+      "outcomes": ["skill_15"]
+    },
+
+    {
+      "id": "course_16",
+      "title": "MLOps Essentials",
+      "cost": 5,
+      "prerequisites": ["skill_15"],
+      "outcomes": ["skill_16"]
+    },
+
+    {
+      "id": "course_17",
+      "title": "Machine Learning Engineer Track",
+      "cost": 5,
+      "prerequisites": [
+        "skill_14",
+        "skill_16"
+      ],
+      "outcomes": ["skill_17"]
+    },
+
+    {
+      "id": "course_18",
+      "title": "Database Engineering",
+      "cost": 4,
+      "prerequisites": ["skill_02"],
+      "outcomes": ["skill_18"]
+    },
+
+    {
+      "id": "course_19",
+      "title": "ETL Pipelines",
+      "cost": 4,
+      "prerequisites": [
+        "skill_08",
+        "skill_18"
+      ],
+      "outcomes": ["skill_19"]
+    },
+
+    {
+      "id": "course_20",
+      "title": "Big Data Processing",
+      "cost": 5,
+      "prerequisites": ["skill_19"],
+      "outcomes": ["skill_20"]
+    },
+
+    {
+      "id": "course_21",
+      "title": "Data Engineer Career Track",
+      "cost": 4,
+      "prerequisites": ["skill_20"],
+      "outcomes": ["skill_21"]
+    },
+
+    {
+      "id": "course_22",
+      "title": "Accelerated Data Science Bootcamp",
+      "cost": 18,
+      "prerequisites": [],
+      "outcomes": [
+        "skill_08",
+        "skill_09",
+        "skill_10",
+        "skill_11",
+        "skill_12"
+      ]
+    },
+
+    {
+      "id": "course_23",
+      "title": "Machine Learning Professional Program",
+      "cost": 25,
+      "prerequisites": [],
+      "outcomes": [
+        "skill_08",
+        "skill_09",
+        "skill_10",
+        "skill_11",
+        "skill_12",
+        "skill_14",
+        "skill_15",
+        "skill_16"
+      ]
+    },
+
+    {
+      "id": "course_24",
+      "title": "Data Engineering Bootcamp",
+      "cost": 10,
+      "prerequisites": [],
+      "outcomes": [
+        "skill_18",
+        "skill_19",
+        "skill_20"
+      ]
+    },
+
+    {
+      "id": "course_25",
+      "title": "Complete AI Career Program",
+      "cost": 70,
       "prerequisites": [],
       "outcomes": [
         "skill_01",
@@ -131,7 +252,16 @@
         "skill_09",
         "skill_10",
         "skill_11",
-        "skill_12"
+        "skill_12",
+        "skill_13",
+        "skill_14",
+        "skill_15",
+        "skill_16",
+        "skill_17",
+        "skill_18",
+        "skill_19",
+        "skill_20",
+        "skill_21"
       ]
     }
   ]
